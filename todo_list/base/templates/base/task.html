@@ -1,0 +1,25 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <a class="back" href="{% url 'tasks' %}">&#8592; Назад</a>
+    <h1>Задача: {{ task }}</h1>
+    <div class="task-info">
+        <p>{{ task.user }}</p>
+        {% if task.complete %}
+            <div class="task__complete--icon"></div>
+        {% else %}
+            <div class="task__incomplete--icon"></div>
+        {% endif %}
+        <p>{{ task.create|date:"d.m.Y" }}</p>
+    </div>
+</div>
+
+<div class="card-body">
+    <p>{{ task.title }}</p>
+    <p>{{ task.description }}</p>
+
+    <p>{{ task.complete }}</p>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <a class="back" href="{% url 'tasks' %}">&#8592; Назад</a>
+</div>
+
+<div class="card-body">
+    <h3>Новая задача</h3>
+    <form class="add-form" action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="button" type="submit" value="Сохранить">
+    </form>
+</div>
+
+{% endblock content %}

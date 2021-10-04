@@ -1,0 +1,47 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<div class="user-bar">
+    <div>
+        <h1>Привет, {{ request.user|title }}</h1>
+        <h3 class="count-info">Не завершено задач: <i>{{ count }}</i>{# count|pluralize:'s' #}</h3>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <a class="logout" href="{% url 'logout' %}">Выйти</a>
+    {% else %}
+        <a href="{% url 'login' %}">Вход</a>
+    {% endif %}
+</div>
+
+<div id="search-add">
+    <form class="search-form" action="" method="GET">
+        <input type="search" name="search" placeholder="Что ищем?" value="{{ search_input }}">
+        <input class="button" type="submit" value="Искать">
+    </form>
+
+    <a id="add-link" href="{% url 'task-create' %}" title="Создать задачу">&#x2b;</a>
+</div>
+
+<div class="tasks">
+    {% for task in tasks %}
+        <div class="task">
+            {% if task.complete %}
+                <div class="task__title">
+                    <div class="task__complete--icon"></div>
+                    <i><s><a href="{% url 'task' task.id %}"><span class="taskname">{{ task.title }}</span></a></s></i>
+                </div>
+            {% else %}
+                <div class="task__title">
+                    <div class="task__incomplete--icon"></div>
+                    <a href="{% url 'task' task.id %}"><span class="taskname">{{ task.title }}</span></a>
+                </div>
+            {% endif %}
+            <div class="task-actions">
+                <a href="{% url 'task-update' task.id %}" class="edit-link" title="Редактировать">&#9998;</a>
+                <a href="{% url 'task-delete' task.id %}" class="delete-link" title="Удалить">&#215;</a>
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
